@@ -74,16 +74,23 @@ def GenRandomPoint(x_min = 0, x_max = 100, y_min = 0, y_max = 50):
     y = np.random.uniform(y_min, y_max)
     return [x,y]
 class RRT:
-    def __init__(self, _start, _goal, goal_radius, obstacles, d_max, width, height):
-        kdtree = KDTree(_start)
-        start = np.array(_start) 
-        goal = np.array(_goal)
+    def __init__(self, payload):
+        start = np.array(payload['start'])
+        goal = np.array(payload['goal'])
+        goal_radius =  payload['goalRadius']
+        obstacles = payload['obstacles']
+        d_max = payload['d_max']
+        width =  payload['width']
+        height = payload['height']
+        kdtree = KDTree(start)
+        start = np.array(start) 
+        goal = np.array(goal)
         dist_to_goal = np.linalg.norm(start - goal)
         eps = 0.5 # safety margin around obstacle
         # Continue searching for points until arrival at goal area
         while dist_to_goal > goal_radius: 
             # generate a random point 
-            x_rand = GenRandomPoint()
+            x_rand = GenRandomPoint(0, width, 0, height)
             # get nearest point in graph from x_rand
             node_nearest = kdtree.NearestNeighbor(x_rand)
             x_nearest = node_nearest.p
@@ -136,4 +143,13 @@ class RRT:
         ax.add_patch(goal_circle)
         
         plt.show()
+    def GetRRTPayload(self):
+        payload = {}
+        payload['goal'] = self.goal
+        payload['goalRadius'] = self.goal_radius
+        payload['obstacles'] = self.obstacles
+        payload['points'] = self.RRTPts
+        payload['targetNodeIndex'] = self.Target_Node.index
+        return payload
+
 

@@ -1,6 +1,6 @@
 import numpy as np
 from shapely.geometry import LineString, Point, Polygon
-from submodules.KDTree4RRT.src.KDTree import KDTree
+from .submodules.KDTree4RRT.src.KDTree import KDTree
 import matplotlib.pyplot as plt
 def Steer(x_random, x_nearest, d_max): 
     """

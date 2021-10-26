@@ -1,0 +1,3 @@
+[submodule "src/submodules/KDTree4RRT"]
+	path = src/submodules/KDTree4RRT
+	url = https://github.com/OfekPeres/KDTree4RRT.git
